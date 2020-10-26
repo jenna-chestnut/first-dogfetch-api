@@ -1,24 +1,22 @@
-const getDogPics = (num) => {
-    fetch(`https://dog.ceo/api/breeds/image/random/` + num)
+const getDogPics = (breed) => {
+    fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
     .then(response => response.json())
     .then(responseJson => displayDogs(responseJson))
-    .catch(error => console.log('sorry! an error :-('))
+    .catch(error => console.log('sorry!' + error))
 }
 
 const displayDogs = (responseJson) => {
     $('.dogpics').html("");
-    responseJson.message.forEach(el => {
         $('.dogpics').append(
-            `<img src=${el} alt="dogpic">`
+            `<img src=${responseJson.message} alt="dogpic">`
         )
-    })
-}
+    }
 
 const getNumber = () => {
     $('main').on('submit', event => {
     event.preventDefault();
-    let num = $('#num').val();
-    getDogPics(num);
+    let breed = $('#breed').val();
+    getDogPics(breed);
   })
 }
 
